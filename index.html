@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <header class="container">
+    <div class="row ml-5">
+      <div class="col-lg-12" align="center">
+        <h1 class="h1">Password Generator</h1>
+      </div>
+    </div>
+  </header>
+
+  <section class="container bg-light p-2 m-auto border" align="center">
+
+    <div class="row justify-content-center">
+      <div class="col-lg-4 bg-primary pb-3 mb-4">
+        <h2 class="h2">Generate a Password</h2>
+      </div>
+    </div>
+
+    <div class="col-lg-12" align="center">
+      <textarea class="form-control text-center m-4" row="10" readonly id="password" placeholder="Your Secure Password"
+        aria-label="Generated Password" style="max-width: 300px;"></textarea>
+    </div>
+
+    <button onclick="generatePw()" class="btn btn-danger justify-content-center" id="generate">
+      Generate Password
+    </button>
+    <button onclick="doCopy()" class="btn btn-danger justify-content-center" id="copy">
+      Copy to Clipboard
+    </button>
+  </section>
+
+
+
+  <script type="text/javascript">
+
+    // Character Sets
+    var CHARACTER_SETS = [
+      [true, "Numbers", "0123456789"],
+      [true, "Lowercase", "abcdefghijklmnopqrstuvwxyz"],
+      [true, "Uppercase", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
+      [true, "ASCII symbols", "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"],
+    ];
+
+    // Global Variables
+    var passwordElem = document.getElementById("password");
+    var copyElem = document.getElementById("copy-button")
+    var currentPassword = null;
+
+    function generatePw() {
+      var x = prompt("how many characters do you wish to have? Please select a value between 5 and 128");
+      console.log(x);
+
+      // Check length
+
+      // confirm CharSet
+      var charSpec = confirm("Do you want special characters?");
+      var charNum = confirm("Do you want numbers?");
+      var charCap = confirm("do you want capital letters");
+      var charLow = confirm("Do you want lowercase letters?");
+
+
+
+
+      function doCopy() {
+        var container = document.querySelector("article");
+        var textarea = document.createElement("textarea");
+        container.insertBefore(textarea, container.firstChild);
+        textarea.value = currentPassword;
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        container.removeChild(textarea);
+      }
+    }
+
+  </script>
+</body>
+
+</html>
