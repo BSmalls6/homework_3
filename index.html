@@ -22,20 +22,20 @@
   <section class="container bg-light p-2 m-auto border" align="center">
 
     <div class="row justify-content-center">
-      <div class="col-lg-4 bg-primary pb-3 mb-4">
-        <h2 class="h2">Generate a Password</h2>
+      <div class="col-lg-4 bg-light pb-3 mb-4 border-bottom">
+        <h2 class="h2 text-muted">Generate a Password</h2>
       </div>
     </div>
 
     <div class="col-lg-12" align="center">
-      <textarea class="form-control text-center m-4" row="10" readonly id="password" placeholder="Your Secure Password"
-        aria-label="Generated Password" style="max-width: 300px;"></textarea>
+      <textarea class="form-control text-center m-4" row="10" readonly id="passwordbox"
+        placeholder="Your Secure Password" aria-label="Generated Password" style="max-width: 300px;"></textarea>
     </div>
 
-    <button onclick="generatePw()" class="btn btn-danger justify-content-center" id="generate">
+    <button onclick="generatePw()" class="btn btn-danger justify-content-center m-3" id="generate">
       Generate Password
     </button>
-    <button onclick="doCopy()" class="btn btn-danger justify-content-center" id="copy">
+    <button onclick="doCopy()" class="btn btn-danger justify-content-center m-3" id="copy">
       Copy to Clipboard
     </button>
   </section>
@@ -45,44 +45,73 @@
   <script type="text/javascript">
 
     // Character Sets
-    var CHARACTER_SETS = [
-      [true, "Numbers", "0123456789"],
-      [true, "Lowercase", "abcdefghijklmnopqrstuvwxyz"],
-      [true, "Uppercase", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"],
-      [true, "ASCII symbols", "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"],
-    ];
+    var char_type = ["special", "upper", "lower", "number"];
+    special = "!#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+    upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    lower = "abcdefghijklmnopqrstuvwxyz";
+    number = "0123456789";
 
-    // Global Variables
-    var passwordElem = document.getElementById("password");
-    var copyElem = document.getElementById("copy-button")
-    var currentPassword = null;
 
+    var passwordlength = null;
+   
+
+    // Generate password
     function generatePw() {
-      var x = prompt("how many characters do you wish to have? Please select a value between 5 and 128");
-      console.log(x);
-
-      // Check length
-
-      // confirm CharSet
-      var charSpec = confirm("Do you want special characters?");
-      var charNum = confirm("Do you want numbers?");
-      var charCap = confirm("do you want capital letters");
-      var charLow = confirm("Do you want lowercase letters?");
 
 
+      length = prompt("how many characters do you wish to have? Please select a value between 5 and 128");
+    console.log(length);
 
+    // Check length
 
-      function doCopy() {
-        var container = document.querySelector("article");
-        var textarea = document.createElement("textarea");
-        container.insertBefore(textarea, container.firstChild);
-        textarea.value = currentPassword;
-        textarea.focus();
-        textarea.select();
-        document.execCommand("copy");
-        container.removeChild(textarea);
+    // confirm CharSet
+    var charSpec = confirm("Do you want special characters?");
+    var charNum = confirm("Do you want numbers?");
+    var charCap = confirm("do you want capital letters");
+    var charLow = confirm("Do you want lowercase letters?");
+
+      var password = "";
+      while (password.length < length) {
+        var pick = null;
+        var type = char_type[Math.floor(Math.random() * char_type.length)];
+        if (type === "special" && charSpec) {
+          pick = special[Math.floor(Math.random() * special.length)];
+        }
+        else if (type === "upper" && charCap) {
+          pick = upper[Math.floor(Math.random() * upper.length)];
+        }
+
+        else if (type === "lower" && charLow) {
+          pick = lower[Math.floor(Math.random() * lower.length)];
+        }
+
+        else if (type === "number" && charNum) {
+          pick = number[Math.floor(Math.random() * number.length)];
+        }
+if (pick !== null) password += pick;
       }
+       // Put password in box:
+    document.getElementById("passwordbox").innerHTML = password;
     }
+
+    
+
+
+   
+
+    // }
+
+    function doCopy() {
+      var container = document.querySelector("textarea");
+      var textarea = document.createElement("textarea");
+      container.insertBefore(textarea, container.firstChild);
+      textarea.value = currentPassword;
+      textarea.focus();
+      textarea.select();
+      document.execCommand("copy");
+      container.removeChild(textarea);
+    }
+
 
   </script>
 </body>
