@@ -63,6 +63,10 @@
     console.log(length);
 
     // Check length
+    while ((length < 5) || (length >128)) {
+      alert("Your Password must be between 5 and 128 characters long");
+      return;
+    };
 
     // confirm CharSet
     var charSpec = confirm("Do you want special characters?");
@@ -99,17 +103,21 @@ if (pick !== null) password += pick;
 
    
 
-    // }
+
 
     function doCopy() {
-      var container = document.querySelector("textarea");
-      var textarea = document.createElement("textarea");
-      container.insertBefore(textarea, container.firstChild);
-      textarea.value = currentPassword;
-      textarea.focus();
-      textarea.select();
-      document.execCommand("copy");
-      container.removeChild(textarea);
+  /* Get the text field */
+  var copyText = document.getElementById("passwordbox");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  alert("Copied the text: " + copyText.value);
     }
 
 
